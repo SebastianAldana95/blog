@@ -15,23 +15,15 @@
     @stack('styles')
 </head>
 <body>
-<div class="preload"></div>
-<header class="space-inter">
-    <div class="container container-flex space-between">
-        <figure class="logo"><img src="/img/logo.png" alt=""></figure>
-        <nav class="custom-wrapper" id="menu">
-            <div class="pure-menu">
-                <a href="#" class="custom-toggle btn-bar" id="toggle"></a>
-            </div>
-            <ul class="container-flex list-unstyled">
-                <li><a href="/" class="pure-menu-link c-gris-2 text-uppercase active">Home</a></li>
-                <li><a href="about.html" class="pure-menu-link c-gris-2 text-uppercase">About</a></li>
-                <li><a href="archive.html" class="pure-menu-link c-gris-2 text-uppercase">Archive</a></li>
-                <li><a href="contact.html" class="pure-menu-link c-gris-2 text-uppercase">Contact</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
+    <div class="preload"></div>
+    <header class="space-inter">
+        <div class="container container-flex space-between">
+            <figure class="logo">
+                <img src="/img/logo.png" alt="">
+            </figure>
+            @include('partials.nav')
+        </div>
+    </header>
 
 <!-- Contenido dinamico -->
 

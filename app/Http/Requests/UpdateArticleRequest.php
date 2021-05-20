@@ -24,7 +24,7 @@ class UpdateArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|min:3|unique:articles',
+            'title' => 'required',
             'content' => 'required',
             'excerpt' => 'required',
             'category_id' => 'required',

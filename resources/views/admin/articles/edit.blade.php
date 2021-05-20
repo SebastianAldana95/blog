@@ -240,7 +240,8 @@
                                     {{ method_field('DELETE') }} {{ csrf_field() }}
                                     <div>
                                         <button class="btn btn-danger btn-xs" style="position: absolute"><i class="fas fa-trash"></i></button>
-                                        <img width="70%" class="img-responsive" src="{{ url(asset('storage/'.$resource->url)) }}" alt="">
+                                        {{--<img width="70%" class="img-responsive" src="{{ url(asset('storage/'.$resource->url)) }}" alt="">--}}
+                                        <object data='{{ url(asset('storage/'.$resource->url)) }}' type='{{ $resource->details }}' width='100%' height='100%' onload="this.contentDocument.querySelector('video').pause()"></object>
                                     </div>
                                 </form>
                             @endforeach
@@ -297,7 +298,7 @@
 
             //Initialize Editor
             $('#editor').summernote({
-                height: 150,   //set editable area's height
+                height: 172,   //set editable area's height
             });
 
             //Initialize Select2 Elements
@@ -323,8 +324,8 @@
 
             var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
                 url: '/admin/articles/{{ $article->url }}/resources', // Set the url
-                acceptedFiles: 'image/*',
-                maxFilesize: 2,
+                acceptedFiles: 'image/*,video/*,application/pdf',
+                maxFilesize: 10,
                 paramName: 'url',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',

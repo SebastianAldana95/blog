@@ -147,6 +147,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                 </div>
             </li>
+
+            <!-- User Account Menu -->
+            <li class="nav-item dropdown user user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <img src="/adminlte/img/user2-160x160.jpg" class="user-image img-circle elevation-2 alt="User Image">
+                    <span class="hidden-xs">{{ auth()->user()->name }}</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <!-- User image -->
+                    <li class="user-header bg-primary">
+                        <img src="/adminlte/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+
+                        <p>
+                            {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
+                            <small>Desde {{ auth()->user()->created_at->format('d/M/Y') }}</small>
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    {{--<li class="user-body">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <a href="#">Followers</a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="#">Sales</a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="#">Friends</a>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </li>--}}
+
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <form method="POST" action="{{ route('logout') }}">
+                            {{ csrf_field() }}
+                            <button class="btn btn-default btn-flat btn-block">Cerrar sesión</button>
+                        </form>
+                    </li>
+                </ul>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                     <i class="fas fa-expand-arrows-alt"></i>
@@ -261,6 +304,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="/adminlte/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+@unless(request()->is('admin/articles/*'))
+    @include('admin.articles.create')
+@endunless
 
 @stack('scripts')
 

@@ -16,15 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
 
-Route::get('/', 'PagesController@home');
+Route::get('/', 'PagesController@home')->name('pages.home');
+Route::get('nosotros', 'PagesController@about')->name('pages.about');
+Route::get('archivo', 'PagesController@archive')->name('pages.archive');
+Route::get('contacto', 'PagesController@contact')->name('pages.contact');
+
 Route::get('blog/{article}', 'ArticleController@show')->name('articles.show');
 Route::get('categories/{category}', 'CategoryController@show')->name('categories.show');
 Route::get('keywords/{keyword}', 'KeywordController@show')->name('keywords.show');
 
 Route::group([
-    'prefix' => 'admin',
-    'namespace' => 'Admin',
-    'middleware' => 'auth'],
+        'prefix' => 'admin',
+        'namespace' => 'Admin',
+        'middleware' => 'auth'],
     function () {
         Route::get('/', 'AdminController@index')->name('dashboard');
         Route::get('articles', 'ArticleController@index')->name('admin.articles.index');

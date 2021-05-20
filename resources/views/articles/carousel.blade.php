@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @foreach($article->resources as $resource)
             <li data-target="#carouselExampleIndicators"
@@ -7,22 +7,25 @@
             </li>
         @endforeach
     </ol>
-    <div class="carousel-inner">
+    <div class="carousel-inner" role="listbox">
         @foreach($article->resources as $resource)
-            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+            <div class="item {{ $loop->first ? 'active' : '' }}">
                 <img src="{{ url(asset('storage/'.$resource->url)) }}" alt="First slide">
             </div>
         @endforeach
     </div>
 
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only"></span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+    <a class="right carousel-control" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only"></span>
     </a>
 </div>
+
+
 
 

@@ -20,10 +20,10 @@ class CreateArticlesTable extends Migration
 
             $table->timestamp('published_at')->nullable();
             $table->string('title');
-            $table->mediumText('excerpt');
-            $table->text('content');
-            $table->string('state');
-            $table->boolean('visibility');
+            $table->mediumText('excerpt')->nullable();
+            $table->text('content')->nullable();
+            $table->string('state')->nullable();
+            $table->boolean('visibility')->nullable();
             $table->double('total_score')->default(0);
 
             $table->foreign('article_id')

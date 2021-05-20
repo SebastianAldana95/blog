@@ -29,7 +29,8 @@ class Article extends Model
         'total_score',
         'iframe',
         'article_id',
-        'category_id'
+        'category_id',
+        'user_id'
     ];
 
     protected $dates = [
@@ -59,7 +60,7 @@ class Article extends Model
     }
 
     // Mutators
-    public function setTitleAttribute($title)
+    /*public function setTitleAttribute($title)
     {
         $this->attributes['title'] =  $title;
 
@@ -70,7 +71,7 @@ class Article extends Model
         }
 
         $this->attributes['url'] = $url;
-    }
+    }*/
 
     public function setCategoryIdAttribute($category)
     {
@@ -89,7 +90,6 @@ class Article extends Model
         return $this->keywords()->sync($keywordIds);
     }
 
-
     // query scope
     public function scopePublished($query)
     {
@@ -97,6 +97,62 @@ class Article extends Model
             ->where('visibility', '=', 1)
             ->where('published_at', '<=', Carbon::now())
             ->latest('published_at');
+    }
+
+    public function scopeAllowed($query)
+    {
+        // si puede ver (view) en la politica de acceso
+        if (auth()->user()->can('view', $this))
+        {
+            return $query;
+        }
+
+        return $query->where('user_id', auth()->id());
+    }
+
+    //es público -> no requiere autenticación
+    public function isPublished()
+    {
+        return ! is_null($this->published_at) && $this->published_at < today();
+    }
+
+    //tipo de vista polimorfica
+    public function viewType($home = '')
+    {
+        if ( $this->resources->count() === 1):
+            return 'articles.photo';
+        elseif($this->resources->count() > 1):
+            return $home === 'home' ? 'articles.carousel-preview' : 'articles.carousel';
+        elseif($this->iframe):
+            return 'articles.iframe';
+        else:
+            return 'articles.text';
+        endif;
+    }
+
+    public static function create(array $attributes = [])
+    {
+        $attributes['user_id'] = auth()->id();
+
+        $article = static::query()->create($attributes);
+
+        $article->generateUrl();
+
+        return $article;
+    }
+
+    public function generateUrl()
+    {
+        $url = Str::slug($this->title);
+
+        if ($this->whereUrl($url)->exists())
+        {
+            $url = "{$url}-{$this->id}";
+        }
+
+        $this->url = $url;
+
+        $this->save();
     }
 
     // relationships
@@ -125,4 +181,10 @@ class Article extends Model
     {
         return $this->hasMany(Resource::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

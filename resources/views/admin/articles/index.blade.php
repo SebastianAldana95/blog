@@ -20,6 +20,12 @@
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">Listado de articulos</h3>
+            <button class="btn btn-primary float-right"
+                    data-toggle="modal"
+                    data-target="#exampleModal">
+                <i class="fas fa-plus"></i>
+                Crear Artículo
+            </button>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -29,7 +35,7 @@
                         <th>ID</th>
                         <th>Titulo</th>
                         <th>Extracto</th>
-                        <th>Acciones</th>
+                        <th class="btn-block">Acciones</th>
                     </tr>
                 </thead>
 
@@ -39,7 +45,7 @@
                             <td>{{ $article->id }}</td>
                             <td>{{ $article->title }}</td>
                             <td>{{ $article->excerpt }}</td>
-                            <td>
+                            <td class="btn-block">
                                 <a href="{{ route('articles.show', $article) }}"
                                     class="btn btn-sm btn-default"
                                     target="_blank">
@@ -95,7 +101,7 @@
             $('#articles-table').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "searching": false,
+                "searching": true,
                 "ordering": true,
                 "info": true,
                 "autoWidth": false,

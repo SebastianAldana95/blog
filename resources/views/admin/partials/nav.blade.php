@@ -3,7 +3,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->is('admin') ? 'active' : ''}}">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : ''}}">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Inicio</span>
             </a>
@@ -11,7 +11,7 @@
 
         <li class="nav-item menu-open">
 
-            <a href="#" class="nav-link {{ request()->is('admin/articles*') ? 'active' : ''}}">
+            <a href="#" class="nav-link {{ request()->routeIs('admin.articles*') ? 'active' : ''}}">
                 <i class="far fa-newspaper"></i>
                 <p>
                     Articulos
@@ -20,22 +20,33 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('admin.articles.index') }}" class="nav-link {{ request()->is('admin/articles') ? 'active' : ''}}">
+                    <a href="{{ route('admin.articles.index') }}" class="nav-link {{ request()->routeIs('admin.articles.index') ? 'active' : ''}}">
                         <i class="fas fa-eye"></i>
                         <p>Ver todos los articulos</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.articles.create') }}" class="nav-link {{ request()->is('admin/articles/create') ? 'active' : ''}}">
-                        <i class="fas fa-plus-circle"></i>
-                        <p>Crear articulo</p>
-                    </a>
+                    @if (request()->routeIs('admin.articles.edit'))
+                        <a href="{{ route('admin.articles.index', '#create') }}"
+                           class="nav-link {{ request()->routeIs('admin.articles.create') ? 'active' : ''}}">
+                            <i class="fas fa-plus-circle"></i>
+                            Crear artículo
+                        </a>
+                    @else
+                        <a href="#"
+                           data-toggle="modal"
+                           data-target="#exampleModal"
+                           class="nav-link {{ request()->routeIs('admin.articles.create') ? 'active' : ''}}">
+                            <i class="fas fa-plus-circle"></i>
+                            Crear artículo
+                        </a>
+                    @endif
                 </li>
-                @if(isset($article) && request()->is('admin/articles/*/edit'))
+                @if(isset($article) && request()->routeIs('admin.articles.edit'))
                     <li class="nav-item">
-                        <a href="{{ route('admin.articles.edit', $article) }}" class="nav-link {{ request()->is('admin/articles/*/edit') ? 'active' : ''}}">
+                        <a href="{{ route('admin.articles.edit', $article) }}" class="nav-link {{ request()->routeIs('admin.articles.edit') ? 'active' : ''}}">
                             <i class="fas fa-edit"></i>
-                            <p>Editar articulo</p>
+                            <p>Editar artículo</p>
                         </a>
                     </li>
                 @endif

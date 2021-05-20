@@ -14,7 +14,9 @@ class AddUrlToArticles extends Migration
     public function up()
     {
         Schema::table('articles', function (Blueprint $table) {
-            $table->string('url')->after('published_at');
+            $table->string('url')->unique()
+                ->nullable()
+                ->after('published_at');
         });
     }
 

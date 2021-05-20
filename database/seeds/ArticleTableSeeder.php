@@ -2,8 +2,10 @@
 
 use App\Article;
 use App\Category;
+use App\Keyword;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArticleTableSeeder extends Seeder
@@ -15,8 +17,10 @@ class ArticleTableSeeder extends Seeder
      */
     public function run()
     {
+        Storage::disk('public')->deleteDirectory('articles');
         Article::truncate();
         Category::truncate();
+        Keyword::truncate();
 
         $category = new Category;
         $category->name = "Policia";
@@ -30,6 +34,10 @@ class ArticleTableSeeder extends Seeder
         $category->name = "Criminalistica";
         $category->save();
 
+        $category = new Category;
+        $category->name = "Fiscales";
+        $category->save();
+
         $article = new Article;
         $article->url = Str::slug("Mi primer articulo");
         $article->title = "Mi primer articulo";
@@ -39,7 +47,10 @@ class ArticleTableSeeder extends Seeder
         $article->state = "privado";
         $article->visibility = 1;
         $article->category_id = 1;
+        $article->user_id = 1;
         $article->save();
+
+        $article->keywords()->attach(Keyword::create(['name' => 'Laravel']));
 
         $article = new Article;
         $article->url = Str::slug("Mi segundo articulo");
@@ -50,7 +61,10 @@ class ArticleTableSeeder extends Seeder
         $article->state = "privado";
         $article->visibility = 1;
         $article->category_id = 2;
+        $article->user_id = 1;
         $article->save();
+
+        $article->keywords()->attach(Keyword::create(['name' => 'PHP']));
 
         $article = new Article;
         $article->url = Str::slug("Mi tercer articulo");
@@ -61,7 +75,10 @@ class ArticleTableSeeder extends Seeder
         $article->state = "privado";
         $article->visibility = 1;
         $article->category_id = 3;
+        $article->user_id = 2;
         $article->save();
+
+        $article->keywords()->attach(Keyword::create(['name' => 'VueJs']));
 
         $article = new Article;
         $article->url = Str::slug("Mi cuarto articulo");
@@ -71,8 +88,11 @@ class ArticleTableSeeder extends Seeder
         $article->published_at = Carbon::now()->subDays(1);
         $article->state = "publico";
         $article->visibility = 1;
-        $article->category_id = 1;
+        $article->category_id = 4;
+        $article->user_id = 2;
         $article->save();
+
+        $article->keywords()->attach(Keyword::create(['name' => 'Javascript']));
 
     }
 }

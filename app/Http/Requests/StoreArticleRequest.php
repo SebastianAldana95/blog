@@ -25,12 +25,6 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|unique:articles',
-            'content' => 'required',
-            'excerpt' => 'required',
-            'category_id' => 'required',
-            'state' => 'required',
-            'visibility' => 'required',
-            'keywords' => 'required'
         ];
     }
 }

@@ -12,7 +12,7 @@ class ResourceController extends Controller
     public function store(Article $article, Request $request)
     {
         $this->validate($request, [
-            'url' => 'required|image|max:2048'
+            'url' => 'required|file'
         ]);
 
         $article->resources()->create([

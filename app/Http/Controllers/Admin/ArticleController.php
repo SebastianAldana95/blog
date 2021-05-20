@@ -8,44 +8,38 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Keyword;
-use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::latest()->get();
+        $articles = Article::allowed()->get();
         return view('admin.articles.index', compact('articles'));
-    }
-
-    public function create()
-    {
-        $categories = Category::all();
-        $keywords = Keyword::all();
-        return view('admin.articles.create', compact('categories', 'keywords'));
     }
 
     public function store(StoreArticleRequest $request)
     {
-        $article = new Article;
-        $article->fill($request->all());
-        $article->save();
+        $this->authorize('create', new Article);
 
-        $article->syncKeywords($request->get('keywords'));
+        $article = Article::create($request->all());
 
-        return back()
-            ->with('flash', 'El articulo ha sido creado');
+        return redirect()->route('admin.articles.edit', $article);
     }
 
     public function edit(Article $article)
     {
-        $categories = Category::all();
-        $keywords = Keyword::all();
-        return view('admin.articles.edit', compact('categories', 'keywords', 'article'));
+        $this->authorize('update', $article);
+
+        return view('admin.articles.edit', [
+            'article' => $article,
+            'categories' => Category::all(),
+            'keywords' => Keyword::all(),
+        ]);
     }
 
     public function update(Article $article, UpdateArticleRequest $request)
     {
+        $this->authorize('update', $article);
 
         $article->update($request->all());
         $article->syncKeywords($request->get('keywords'));
@@ -58,8 +52,8 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
 
+        $this->authorize('delete', $article);
         $article->delete();
-
         return redirect()
             ->route('admin.articles.index')
             ->with('flash', 'El articulo ha sido eliminado!');
