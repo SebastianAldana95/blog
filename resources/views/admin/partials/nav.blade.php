@@ -3,7 +3,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : ''}}">
+            <a href="{{ route('dashboard') }}" class="nav-link {{ setActiveRoute('dashboard') }}">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Inicio</span>
             </a>
@@ -11,7 +11,7 @@
 
         <li class="nav-item menu-open">
 
-            <a href="#" class="nav-link {{ request()->routeIs('admin.articles*') ? 'active' : ''}}">
+            <a href="#" class="nav-link {{ setActiveRoute('admin.articles.index')}}">
                 <i class="far fa-newspaper"></i>
                 <p>
                     Articulos
@@ -20,15 +20,15 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('admin.articles.index') }}" class="nav-link {{ request()->routeIs('admin.articles.index') ? 'active' : ''}}">
+                    <a href="{{ route('admin.articles.index') }}"
+                       class="nav-link {{ setActiveRoute('admin.articles.index') }}">
                         <i class="fas fa-eye"></i>
                         <p>Ver todos los articulos</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     @if (request()->routeIs('admin.articles.edit'))
-                        <a href="{{ route('admin.articles.index', '#create') }}"
-                           class="nav-link {{ request()->routeIs('admin.articles.create') ? 'active' : ''}}">
+                        <a href="{{ route('admin.articles.index', '#create') }}">
                             <i class="fas fa-plus-circle"></i>
                             Crear artículo
                         </a>
@@ -36,7 +36,7 @@
                         <a href="#"
                            data-toggle="modal"
                            data-target="#exampleModal"
-                           class="nav-link {{ request()->routeIs('admin.articles.create') ? 'active' : ''}}">
+                           class="nav-link">
                             <i class="fas fa-plus-circle"></i>
                             Crear artículo
                         </a>
@@ -52,14 +52,32 @@
                 @endif
             </ul>
         </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
+
+        <li class="nav-item menu-open">
+
+            <a href="#" class="nav-link {{ setActiveRoute(['admin.users.index', 'admin.users.create'])}}">
+                <i class="fas fa-users"></i>
                 <p>
-                    Simple Link
-                    <span class="right badge badge-danger">New</span>
+                    Usuarios
+                    <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.users.index') }}"
+                       class="nav-link {{ setActiveRoute('admin.users.index') }}">
+                        <i class="fas fa-eye"></i>
+                        <p>Ver todos los usuarios</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                        <a href="{{ route('admin.users.create') }}" class="nav-link {{ setActiveRoute('admin.users.create') }}">
+                            <i class="fas fa-plus-circle"></i>
+                            <p>Crear usuarios</p>
+                        </a>
+                </li>
+            </ul>
         </li>
+
     </ul>
 </nav>

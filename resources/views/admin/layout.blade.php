@@ -151,16 +151,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- User Account Menu -->
             <li class="nav-item dropdown user user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="/adminlte/img/user2-160x160.jpg" class="user-image img-circle elevation-2 alt="User Image">
+                    <img src="/adminlte/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
                     <span class="hidden-xs">{{ auth()->user()->name }}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                     <!-- User image -->
                     <li class="user-header bg-primary">
                         <img src="/adminlte/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-
                         <p>
-                            {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->name }}
+                            {{ auth()->user()->name }} - {{ auth()->user()->getRoleNames() }}
                             <small>Desde {{ auth()->user()->created_at->format('d/M/Y') }}</small>
                         </p>
                     </li>
